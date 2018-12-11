@@ -19,5 +19,26 @@ const removeNextReactivePair = input => {
   if (result === input) return result
 }
 
-console.log(removeNextReactivePair(input).length)
+console.log('Part One: ' + removeNextReactivePair(input).length)
 
+// part two
+const alphabet = 'abcdefghijklmnopqrstuvwxyz'
+const input_test = 'dabAcCaCBAcCcaDA'
+
+const removeChars = (input, char) => {
+  const charPos = input.indexOf(char)
+  if (charPos === -1) {
+    return input
+  } else {
+    const result = input.slice(0, charPos) + input.slice(charPos + 1)
+    return removeChars(result, char)
+  }
+}
+
+console.log('Part Two:')
+for (let i = 0; i < alphabet.length; i++) {
+  lowerChar = alphabet.charAt(i)
+  uppperChar = String.fromCharCode(lowerChar.charCodeAt(0) - 32)
+  const reducedInput = removeChars(removeChars(input, lowerChar), uppperChar)
+  console.log(lowerChar + ': ' + removeNextReactivePair(reducedInput).length)
+}
